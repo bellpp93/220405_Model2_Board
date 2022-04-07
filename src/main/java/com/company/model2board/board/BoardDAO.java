@@ -48,4 +48,40 @@ public class BoardDAO {
 		}
 		return boardList;
 	}  // END getBoardList() 메소드 =================================================
+	
+	// 게시글 상세 보기 메소드
+	public BoardDO getBoard(BoardDO boardDO) {
+		System.out.println("===> getBoard() 메소드 처리됨!");
+		
+		BoardDO board = null;
+		
+		try {
+			conn = JDBCUtil.getConnection();
+			
+			String UPDATE_CNT = "update board set cnt=cnt+1 where seq=?";
+			pstmt = conn.prepareStatement(UPDATE_CNT);
+			pstmt.setInt(1, boardDO.getSeq());
+			pstmt.executeUpdate();
+			
+			String BOARD_GET = "select * from board Where seq=?";
+			pstmt = conn.prepareStatement(BOARD_GET);
+			pstmt.setInt(1, boardDO.getSeq());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				board = new BoardDO();
+				board.setSeq(rs.getInt("SEQ"));
+				board.setTitle(rs.getString("TITLE"));
+				board.setWriter(rs.getString("WRITER"));
+				board.setContent(rs.getString("CONTENT"));
+				board.setRegdate(rs.getDate("REGDATE"));
+				board.setCnt(rs.getInt("CNT"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(rs, pstmt, conn);
+		}
+		return board;
+	}  // END getBoard() 메소드 ===================================================
 }

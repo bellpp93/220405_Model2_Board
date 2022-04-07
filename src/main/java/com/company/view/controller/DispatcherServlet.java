@@ -60,9 +60,12 @@ public class DispatcherServlet extends HttpServlet {
 			// 3. 화면 네비게이션(포워딩)
 			if (user != null) {
 				// System.out.println("로그인 성공");
+				HttpSession session = request.getSession();
+				session.setAttribute("IdKey", id);
 				response.sendRedirect("getBoardList.do");
 			} else {
 				// System.out.println("로그인 실패");
+				response.sendRedirect("login.jsp");
 			}
 		} else if (path.equals("/getBoardList.do")) {
 			System.out.println("전체 게시글 목록 보기 처리됨!");
@@ -88,7 +91,24 @@ public class DispatcherServlet extends HttpServlet {
 			// 4. 포워딩 => 응답
 			response.sendRedirect("getBoardList.jsp");
 		} else if (path.equals("/getBoardList.do")) {
+			System.out.println("게시글 상세보기 처리됨!");
 			
+			// 1. 검색 할 게시글 번호 추출
+			String seq = request.getParameter("seq");
+			
+			// 2. Model을 이용한 DB 연동 처리
+			BoardDO boardDO = new BoardDO();
+			boardDO.setSeq(Integer.parseInt(seq));
+			
+			BoardDAO boardDAO = new BoardDAO();
+			BoardDO board = boardDAO.getBoard(boardDO);
+			
+			// 3. [중요] board 테이블의 select 결과를 세션에 저장한다.
+			HttpSession session = request.getSession();
+			session.setAttribute("board", board);
+			
+			// 4. 포워딩 => 응답
+			response.sendRedirect("getBoard.jsp");
 		}
 	}
 }

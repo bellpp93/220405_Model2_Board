@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="error.jsp" %>
 <!-- 추가 -->
 <%@ page import="com.company.model2board.board.BoardDO" %>
 <%@ page import="java.util.List" %>
@@ -8,6 +8,11 @@
 
 <!-- JSTL 추가 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+	int totalList = boardList.size();
+	request.setAttribute("totalList", totalList);
+%>
 
 <!DOCTYPE html>
 <html>
@@ -18,13 +23,13 @@
 	#div_box {
 		position:absolute;
 		top:10%;
-		left:40%;
+		left:20%;
 	}
 </style>
 </head>
 <body>
 	<div id="div_box">
-		<h3>${idKey}님 환영합니다.&nbsp;&nbsp;&nbsp;<a href="logout.do">로그아웃</a></h3>
+		<h3>${IdKey}님 환영합니다.&nbsp;&nbsp;&nbsp;<a href="logout.do">로그아웃</a></h3>
 		<form name="getBoardListForm" method="POST" action="getBoardList.do">
 			<p>총 게시글: ${totalList}건</p>
 			<table border="1" cellpadding="0" cellspacing="0" width="700">
@@ -59,7 +64,7 @@
 			</c:forEach>
 		</table>
 		<br><br>
-		<a href="insertBoard.jsp">새 게시글 등록</a>
+		<a href="insertBoard.jsp">새 게시글 등록</a>&nbsp;&nbsp;&nbsp;
 		<a href="getBoardList.do">전체 게시글 목록 보기</a>
 	</div>
 </body>
