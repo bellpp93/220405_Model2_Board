@@ -56,8 +56,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center"></td>
+					<td colspan="2" align="center">
 					<input type="submit" value="게시글 수정"/>
+					</td>
 				</tr>
 			</table>
 		</form>

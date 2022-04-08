@@ -49,7 +49,7 @@ public class BoardDAO {
 		return boardList;
 	}  // END getBoardList() 메소드 =================================================
 	
-	// 게시글 상세 보기 메소드
+	// 게시글 상세보기 메소드
 	public BoardDO getBoard(BoardDO boardDO) {
 		System.out.println("===> getBoard() 메소드 처리됨!");
 		
@@ -84,4 +84,67 @@ public class BoardDAO {
 		}
 		return board;
 	}  // END getBoard() 메소드 ===================================================
+	
+	// 게시글 등록 메소드
+	public void insertBoard(BoardDO boardDO) {
+		System.out.println("===> JDBC로 insertBoard() 처리됨!");
+		
+		BoardDO board = null;
+		
+		try {
+			conn = JDBCUtil.getConnection();
+			
+			String BOARD_INSERT 
+				= "insert into board(seq,title,writer,content) values((select nvl(max(seq),0)+1 from board),?,?,?)";
+			pstmt = conn.prepareStatement(BOARD_INSERT);
+			pstmt.setString(1, boardDO.getTitle());
+			pstmt.setString(2, boardDO.getWriter());
+			pstmt.setString(3, boardDO.getContent());
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(pstmt, conn);
+		}
+	}  // END insertBoard() 메소드 ===============================================
+	
+	// 게시글 수정 메소드
+	public void updateBoard(BoardDO boardDO) {
+		System.out.println("===> JDBC로 updateBoard() 처리됨!");
+		
+		try {
+			conn = JDBCUtil.getConnection();
+			
+			String BOARD_UPDATE = "update board set title=?, content=? where seq=?";
+			pstmt = conn.prepareStatement(BOARD_UPDATE);
+			pstmt.setString(1, boardDO.getTitle());
+			pstmt.setString(2, boardDO.getContent());
+			pstmt.setInt(3, boardDO.getSeq());
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(pstmt, conn);
+		}
+	}  // END updateBoard() 메소드 ===============================================
+	
+	// 게시글 삭제 메소드
+	public void deleteBoard(BoardDO boardDO) {
+		System.out.println("===> JDBC로 deleteBoard() 처리됨!");
+		
+		try {
+			conn = JDBCUtil.getConnection();
+			
+			String DELETE_BOARD = "delete from board where seq=?";
+			pstmt = conn.prepareStatement(DELETE_BOARD);
+			pstmt.setInt(1, boardDO.getSeq());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(pstmt, conn);			
+		}
+	}
 }

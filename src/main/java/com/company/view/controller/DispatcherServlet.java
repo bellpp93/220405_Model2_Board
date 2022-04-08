@@ -109,6 +109,59 @@ public class DispatcherServlet extends HttpServlet {
 			
 			// 4. 포워딩 => 응답
 			response.sendRedirect("getBoard.jsp");
+		} else if (path.equals("/insertBoard.do")) {
+			System.out.println("게시글 입력 처리됨!!");
+			
+			String title = request.getParameter("title");
+			String writer = request.getParameter("writer");
+			String content = request.getParameter("content");
+			
+			BoardDO boardDO = new BoardDO();
+			boardDO.setTitle(title);
+			boardDO.setWriter(writer);
+			boardDO.setContent(content);
+			
+			BoardDAO boardDAO = new BoardDAO();
+			boardDAO.insertBoard(boardDO);
+			
+			response.sendRedirect("getBoardList.do");
+		} else if(path.equals("/updateBoard.do")) {
+			System.out.println("게시글 수정 처리됨!");
+			
+			request.setCharacterEncoding("UTF-8");
+			
+			String seq = request.getParameter("seq");
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			
+			BoardDO boardDO = new BoardDO();
+			boardDO.setSeq(Integer.parseInt(seq));
+			boardDO.setTitle(title);
+			boardDO.setContent(content);
+			
+			BoardDAO boardDAO = new BoardDAO();
+			boardDAO.updateBoard(boardDO);
+			
+			response.sendRedirect("getBoardList.do");
+		} else if(path.equals("/deleteBoard.do")) {
+			System.out.println("게시글 삭제 처리됨!");
+			
+			String seq = request.getParameter("seq");
+			
+			BoardDO boardDO = new BoardDO();
+			boardDO.setSeq(Integer.parseInt(seq));
+			
+			BoardDAO boardDAO = new BoardDAO();
+			boardDAO.deleteBoard(boardDO);
+			
+			response.sendRedirect("getBoardList.do");
+		} else if(path.equals("/logout.do")) {
+			System.out.println("로그아웃 처리됨!");
+			
+			HttpSession session = request.getSession();
+			session.invalidate();  // 세션 종료
+			
+			response.sendRedirect("login.jsp");
 		}
 	}
 }
