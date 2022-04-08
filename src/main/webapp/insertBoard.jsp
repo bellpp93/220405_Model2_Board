@@ -23,13 +23,13 @@
             <tr>
                <td bgcolor="orange" width="70">제목</td>
                <td align="left">
-                  <input type="text" name="title" />
+                  <input type="text" name="title"/>
                </td>
             </tr>
             <tr>
                <td bgcolor="orange">작성자</td>
                <td align="left">
-                  <input type="text" name="writer" />
+                  <input type="text" name="writer"/>
                </td>
             </tr>
             <tr>

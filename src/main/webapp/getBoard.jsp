@@ -30,30 +30,23 @@
 				<tr>
 					<td bgcolor="orange" width="70">제목</td>
 					<td align="left">
-						<input name="title" type="text" value="${board.title}">
-					</td>
+						<input name="title" type="text" value="${board.title}"/>
 				</tr>
 				<tr>
 					<td bgcolor="orange">작성자</td>
-					<td align="left">
-						<input name="title" value="${board.writer}">
-					</td>
+					<td align="left"><input name="title" value="${board.writer}"/>
 				</tr>
 				<tr>
 					<td bgcolor="orange">내용</td>
-					<td>
-						<textarea name="content" rows="10" cols="40">${board.content}</textarea>
-					</td>
+					<td><textarea name="content" rows="10" cols="40">${board.content}</textarea>
 				</tr>
 				<tr>
 					<td bgcolor="orange">작성일자</td>
 					<td align="left">${board.regdate}
-					</td>
 				</tr>
 				<tr>
 					<td bgcolor="orange">조회수</td>
 					<td align="left">${board.cnt}
-					</td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
