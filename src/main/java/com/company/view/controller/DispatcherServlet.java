@@ -90,7 +90,7 @@ public class DispatcherServlet extends HttpServlet {
 			
 			// 4. 포워딩 => 응답
 			response.sendRedirect("getBoardList.jsp");
-		} else if (path.equals("/getBoardList.do")) {
+		} else if (path.equals("/getBoard.do")) {
 			System.out.println("게시글 상세보기 처리됨!");
 			
 			// 1. 검색 할 게시글 번호 추출
